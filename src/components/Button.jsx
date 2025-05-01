@@ -1,7 +1,10 @@
 /* eslint-disable react/prop-types */
-export default function Button({ type, children }) {
+export default function Button({ onClick, buttontype, children }) {
   return (
-    <button className={`btn ${type === "secondary" ? "btn--secondary" : ""}`}>
+    <button
+      onClick={onClick}
+      className={`btn ${buttontype === "secondary" ? "btn--secondary" : ""}`}
+    >
       {children}
     </button>
   );
