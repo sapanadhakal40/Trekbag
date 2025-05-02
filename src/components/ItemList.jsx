@@ -1,4 +1,8 @@
-export default function ItemList({ items, handleDeleteItem }) {
+export default function ItemList({
+  items,
+  handleDeleteItem,
+  handleToggleItem,
+}) {
   return (
     <ul>
       {items.map((item) => {
@@ -7,20 +11,22 @@ export default function ItemList({ items, handleDeleteItem }) {
             key={item.name}
             item={item}
             handleDeleteItem={handleDeleteItem}
+            handleToggleItem={handleToggleItem}
           />
         );
       })}
-      {/* <Item item={item1} />
-      <Item item={item2} />
-      <Item item={item3} /> */}
     </ul>
   );
 }
-function Item({ item, handleDeleteItem }) {
+function Item({ item, handleDeleteItem, handleToggleItem }) {
   return (
     <li className="item">
       <label>
-        <input checked={item.packed} type="checkbox" />
+        <input
+          onChange={() => handleToggleItem(item.id)}
+          checked={item.packed}
+          type="checkbox"
+        />
         {item.name}
       </label>
       <button onClick={() => handleDeleteItem(item.id)}>❌</button>
