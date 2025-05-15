@@ -6,7 +6,11 @@ export const ItemsContext = createContext();
 
 export default function ItemsContextProvider({ children }) {
   const [items, setItems] = useState(() => {
-    return JSON.parse(localStorage.getItem("items")) || initialItems;
+    try {
+      return JSON.parse(localStorage.getItem("items")) || initialItems;
+    } catch {
+      return initialItems;
+    }
   });
 
   const handleAddItem = (newItemText) => {
@@ -58,11 +62,15 @@ export default function ItemsContextProvider({ children }) {
   };
 
   useEffect(() => {
-    localStorage.setItem("items", JSON.stringify(items));
+    try {
+      localStorage.setItem("items", JSON.stringify(items));
+    } catch {
+      return items;
+    }
   }, [items]);
 
   return (
-    <ItemsContext.provider
+    <ItemsContext.Provider
       value={{
         items,
         handleAddItem,
@@ -75,6 +83,6 @@ export default function ItemsContextProvider({ children }) {
       }}
     >
       {children}
-    </ItemsContext.provider>
+    </ItemsContext.Provider>
   );
 }
